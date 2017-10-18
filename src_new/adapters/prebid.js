@@ -51,6 +51,9 @@ exports.transformPBBidToOWBid = transformPBBidToOWBid;
 
 function pbBidStreamHandler(pbBid){
 	var responseID = pbBid.adUnitCode || "";
+
+	//todo: serverSideEabled: bid will contain the kgpv, divId, adapterid 
+
 	/* istanbul ignore else */
 	if(util.isOwnProperty(refThis.kgpvMap, responseID)){
 		/* istanbul ignore else */
@@ -93,6 +96,8 @@ function generatedKeyCallback(adapterID, adUnits, adapterConfig, impressionID, g
 			
 	var code, sizes, divID = currentSlot.getDivID();
 
+	//todo: serverSideEabled: what if we change code = divID @ adapterID @ generatedKey
+
 	if(kgpConsistsWidthAndHeight){
 		code = divID + "@" + adapterID + "@" + currentWidth + "X" + currentHeight;
 		sizes = [[currentWidth, currentHeight]];
@@ -101,10 +106,14 @@ function generatedKeyCallback(adapterID, adUnits, adapterConfig, impressionID, g
 		sizes = currentSlot.getSizes();
 	}
 
+	//todo: serverSideEabled: do following step
+
 	refThis.kgpvMap [ code ] = {
 		kgpv: generatedKey,
 		divID: divID	
 	};
+
+	//todo: serverSideEabled: return
 
 	/* istanbul ignore else */
 	if(!util.isOwnProperty(adUnits, code)){
@@ -161,6 +170,8 @@ function generatePbConf(adapterID, adapterConfig, activeSlots, adUnits, impressi
 		return;
 	}
 
+	//todo: serverSideEabled: do not set default bids as we do not want to throttle them at client-side
+
 	util.forEachGeneratedKey(
 		adapterID,
 		adUnits,
@@ -207,6 +218,9 @@ function fetchBids(activeSlots, impressionID){
 		//				if we add any new parent-adapter, then code changes will be required
 		/* istanbul ignore else */
 		if(adapterID !== refThis.parentAdapterID){
+
+			//todo: serverSideEabled: we do not want to throttle them at client-side
+
 			/* istanbul ignore if */
 			if(adapterManager.throttleAdapter(randomNumberBelow100, adapterID) == false){
 				adapterManager.setInitTimeForSlotsForAdapter(activeSlots, adapterID);
