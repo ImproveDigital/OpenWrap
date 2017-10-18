@@ -41,6 +41,15 @@ exports.getAdapterThrottle = function(adapterID){
 	return 0;
 };
 
+exports.isServerSideAdapter = function(adapterID){
+	var adapterConfig = config.adapters;
+	/* istanbul ignore else */
+	if(util.isOwnProperty(adapterConfig[adapterID], CONSTANTS.CONFIG.SERVER_SIDE_ENABLED)){
+		return window.parseInt(adapterConfig[adapterID][CONSTANTS.CONFIG.SERVER_SIDE_ENABLED]) === 1 || false;
+	}
+	return false;
+};
+
 exports.getAdapterMaskBidsStatus = function(adapterID){
 	var adapterConfig = config.adapters;
 	var tempSettings = {
@@ -56,7 +65,7 @@ exports.getAdapterMaskBidsStatus = function(adapterID){
 		return window.parseInt(adapterConfig[adapterID][CONSTANTS.CONFIG.MASK_BIDS]) || 0;
 	}
 	return 0;	
-}
+};
 
 exports.getBidPassThroughStatus = function(adapterID){
 	var adapterConfig = config.adapters;
