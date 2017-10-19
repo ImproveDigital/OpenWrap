@@ -45,7 +45,7 @@ exports.isServerSideAdapter = function(adapterID){
 	var adapterConfig = config.adapters;
 	/* istanbul ignore else */
 	if(util.isOwnProperty(adapterConfig[adapterID], CONSTANTS.CONFIG.SERVER_SIDE_ENABLED)){
-		return window.parseInt(adapterConfig[adapterID][CONSTANTS.CONFIG.SERVER_SIDE_ENABLED]) === 1 || false;
+		return window.parseInt(adapterConfig[adapterID][CONSTANTS.CONFIG.SERVER_SIDE_ENABLED]) === 1;
 	}
 	return false;
 };
